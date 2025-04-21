@@ -1,0 +1,8 @@
+{
+  "lineLength": 100,
+  "tabWidth": 4,
+  "indentation": {
+    "spaces": 4
+  },
+  "respectsExistingLineBreaks": true
+}
