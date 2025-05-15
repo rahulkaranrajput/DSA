@@ -94,10 +94,54 @@ class Solution {
     }
 }
 
-let values = [0]
+
+class Solution2 {
+    func evaluateTree(_ root: TreeNode?) -> Bool {
+        guard let node = root else { return false}
+        var stack = [(TreeNode, Bool)]()
+        var result = [Bool]()
+
+        stack.append((node, false))
+
+        while !stack.isEmpty {
+            let (top,isVisited) = stack.removeLast()
+
+            if isVisited {
+
+                if top.left == nil && top.right == nil {
+                    result.append(top.val == 1)
+                } else {
+                    let right = result.removeLast()
+                    let left = result.removeLast()
+
+                    if top.val == 2 {
+                        result.append(right || left)
+                    } else if top.val == 3 {
+                        result.append(right && left)
+                    }
+                }
+            } else {
+                stack.append((top,true))
+
+                if let right = top.right {
+                    stack.append((right, false))
+                }
+
+                if let left = top.left {
+                    stack.append((left, false))
+                }
+            }
+        }
+
+        return result.last ?? false
+    }
+}
+
+
+let values = [2,1,3,nil,nil,0,1]
 let root = buildTree(from: values)
 
-let result = Solution().evaluateTree(root)
+let result = Solution2().evaluateTree(root)
 print(result)
 
 
